@@ -1,0 +1,19 @@
+FROM gradle:4.3.0-jdk8-alpine
+
+ADD src src
+ADD build.gradle .
+ADD gradle.properties .
+
+RUN gradle build
+
+FROM openjdk:8-jdk-alpine
+ARG BUILD_VERSION
+
+ENV DB_HOST localhost
+ENV DB_PORT 3306
+
+COPY --from=0 /home/gradle/build/libs/spring-boot-webapp-${BUILD_VERSION}.jar spring-boot-webapp.jar
+
+EXPOSE 19900
+
+ENTRYPOINT exec java $JAVA_OPTS -Ddb.host=$DB_HOST -Ddb.port=$DB_PORT -jar /spring-boot-webapp.jar

@@ -1,0 +1,37 @@
+server:
+  port: 19900
+
+db:
+  host: localhost
+  port: 3306
+
+endpoints:
+  health:
+    enabled: true
+
+spring:
+  jmx:
+    enabled: true
+    defaultDomain: jcg-webapp-${server.port}
+
+  flyway:
+    enabled: true
+    locations: 
+      - classpath:db/migration/mysql
+
+  jpa:
+    database: mysql
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${db.host}:${db.port}/my_app_db?user=root&password=p$ssw0rd&useUnicode=true&characterEncoding=UTF-8&useLocalSessionState=true&useSSL=false
+    jmxEnabled: true
+    hikari:
+      poolName: my-app-db-pool
+      maximumPoolSize: 5
+      transactionIsolation: TRANSACTION_READ_COMMITTED
+
