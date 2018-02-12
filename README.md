@@ -41,7 +41,7 @@
 
 - Run with docker-compose (Check the port with docker ps, it's randomly mapped)
 
- docker-compose -f src/main/docker-compose/docker-compose.yml up
+      docker-compose -f src/main/docker-compose/docker-compose.yml up
 
 
 - invoke REST(ful) APIs using `curl` commands
